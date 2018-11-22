@@ -1,0 +1,18 @@
+== Cities
+
+=== Buscar Cidades
+include::{snippets}/find/http-request.adoc[]
+include::{snippets}/find-all-contato/http-response.adoc[]
+
+=== Criar Cidades
+include::{snippets}/create-contato/http-request.adoc[]
+include::{snippets}/create-contato/http-response.adoc[]
+
+=== Editar Cidade
+include::{snippets}/update-contato/http-request.adoc[]
+include::{snippets}/update-contato/http-response.adoc[]
+
+=== Excluir Cidades
+include::{snippets}/delete-contato/http-request.adoc[]
+include::{snippets}/delete-contato/request-parameters.adoc[]
+include::{snippets}/delete-contato/http-response.adoc[]

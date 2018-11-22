@@ -1,0 +1,13 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:9.4
+    ports:
+    - "5432:5432"
+    environment:
+    - POSTGRES_DB=projectApi
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
+    - MAX_CONNECTIONS=300
+    volumes:
+    - ./scripts:/docker-entrypoint-initdb.d
