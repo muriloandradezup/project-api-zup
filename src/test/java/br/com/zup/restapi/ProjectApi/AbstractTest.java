@@ -1,18 +1,35 @@
 package br.com.zup.restapi.ProjectApi;
 
+import br.com.zup.restapi.ProjectApi.ProjectApiApplication;
+import br.com.zup.restapi.ProjectApi.controllers.CityController;
+import br.com.zup.restapi.ProjectApi.repository.CityRepository;
+import br.com.zup.restapi.ProjectApi.services.CityServiceBean;
 import org.junit.Before;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.operation.preprocess.Preprocessors;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.servlet.FilterConfig;
 
-
+@WebAppConfiguration
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = ProjectApiApplication.class)
+@Transactional
 public abstract class AbstractTest {
 
     @Rule
@@ -22,6 +39,16 @@ public abstract class AbstractTest {
 
     @Autowired
     protected WebApplicationContext context;
+
+    @Autowired
+    CityController cityController;
+
+    @Autowired
+    CityServiceBean cityService;
+
+    @Autowired
+    CityRepository cityRepository;
+
 
     protected MockMvc mockMvc;
 
