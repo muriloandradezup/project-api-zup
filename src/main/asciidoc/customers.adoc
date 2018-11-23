@@ -1,18 +1,33 @@
-== Customers
+== Clientes
 
-=== Buscar Clientes
-include::{snippets}/find-all-contato/http-request.adoc[]
-include::{snippets}/find-all-contato/http-response.adoc[]
+=== Buscar Todos os Clientes
+include::{snippets}/get-all-customers-test/http-request.adoc[]
+include::{snippets}/get-all-customers-test/http-response.adoc[]
+
+=== Buscar uma Cliente pelo ID
+include::{snippets}/get-one-customer-test/http-request.adoc[]
+include::{snippets}/get-one-customer-test/http-response.adoc[]
 
 === Criar Clientes
-include::{snippets}/create-contato/http-request.adoc[]
-include::{snippets}/create-contato/http-response.adoc[]
+include::{snippets}/create-customer-test/http-request.adoc[]
+include::{snippets}/create-customer-test/request-body.adoc[]
+include::{snippets}/create-customer-test/http-response.adoc[]
+include::{snippets}/create-customer-test/response-body.adoc[]
 
 === Editar Cliente
-include::{snippets}/update-contato/http-request.adoc[]
-include::{snippets}/update-contato/http-response.adoc[]
+include::{snippets}/update-customer-test/http-request.adoc[]
+include::{snippets}/update-customer-test/request-body.adoc[]
+include::{snippets}/update-customer-test/http-response.adoc[]
+include::{snippets}/update-customer-test/response-body.adoc[]
 
-=== Exclui Clientes
-include::{snippets}/delete-contato/http-request.adoc[]
-include::{snippets}/delete-contato/request-parameters.adoc[]
-include::{snippets}/delete-contato/http-response.adoc[]
+=== Excluir Clientes
+include::{snippets}/delete-customer-test/http-request.adoc[]
+include::{snippets}/delete-customer-test/http-response.adoc[]
+
+=== Pesquisar Clientes
+include::{snippets}/search-customer-test/http-request.adoc[]
+include::{snippets}/search-customer-test/http-response.adoc[]
+
+==== Pesquisar com Paginação
+include::{snippets}/search-customer-with-pageable-test/http-request.adoc[]
+include::{snippets}/search-customer-with-pageable-test/http-response.adoc[]

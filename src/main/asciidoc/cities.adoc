@@ -1,18 +1,33 @@
-== Cities
+== Cidades
 
-=== Buscar Cidades
-include::{snippets}/find/http-request.adoc[]
-include::{snippets}/find-all-contato/http-response.adoc[]
+=== Buscar Todas as Cidades
+include::{snippets}/get-all-cities-test/http-request.adoc[]
+include::{snippets}/get-all-cities-test/http-response.adoc[]
+
+=== Buscar uma Cidade pelo ID
+include::{snippets}/get-one-city-test/http-request.adoc[]
+include::{snippets}/get-one-city-test/http-response.adoc[]
 
 === Criar Cidades
-include::{snippets}/create-contato/http-request.adoc[]
-include::{snippets}/create-contato/http-response.adoc[]
+include::{snippets}/create-city-test/http-request.adoc[]
+include::{snippets}/create-city-test/request-body.adoc[]
+include::{snippets}/create-city-test/http-response.adoc[]
+include::{snippets}/create-city-test/response-body.adoc[]
 
 === Editar Cidade
-include::{snippets}/update-contato/http-request.adoc[]
-include::{snippets}/update-contato/http-response.adoc[]
+include::{snippets}/update-city-test/http-request.adoc[]
+include::{snippets}/update-city-test/request-body.adoc[]
+include::{snippets}/update-city-test/http-response.adoc[]
+include::{snippets}/update-city-test/response-body.adoc[]
 
 === Excluir Cidades
-include::{snippets}/delete-contato/http-request.adoc[]
-include::{snippets}/delete-contato/request-parameters.adoc[]
-include::{snippets}/delete-contato/http-response.adoc[]
+include::{snippets}/delete-city-test/http-request.adoc[]
+include::{snippets}/delete-city-test/http-response.adoc[]
+
+=== Pesquisar Cidades
+include::{snippets}/search-city-test/http-request.adoc[]
+include::{snippets}/search-city-test/http-response.adoc[]
+
+==== Pesquisar com Paginação
+include::{snippets}/search-city-with-pageable-test/http-request.adoc[]
+include::{snippets}/search-city-with-pageable-test/http-response.adoc[]

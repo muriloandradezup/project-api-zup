@@ -1,5 +1,6 @@
 package br.com.zup.restapi.ProjectApi.controllers;
 
+import br.com.zup.restapi.ProjectApi.AbstractTest;
 import br.com.zup.restapi.ProjectApi.models.City;
 import br.com.zup.restapi.ProjectApi.models.Customer;
 import br.com.zup.restapi.ProjectApi.repository.CustomerRepository;
@@ -34,27 +35,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
-public class CustomerControllerIntegrationTest {
-
-    @Autowired
-    WebApplicationContext context;
-
-    @Autowired
-    CustomerController customerController;
-
-    @Autowired
-    CustomerServiceBean customerService;
-
-    @Autowired
-    CustomerRepository customerRepository;
-
-    @Autowired
-    CityServiceBean cityService;
+public class CustomerControllerIntegrationTest extends AbstractTest {
 
     private City city;
     private Customer customer1;
     private Customer customer2;
-    private MockMvc mockMvc;
     private long invalidId = -1;
     private Map<String,String> cityJson = new HashMap<>();
     private Map<String,Object> customerJson = new HashMap<>();
@@ -64,7 +49,6 @@ public class CustomerControllerIntegrationTest {
 
     @Before
     public void setUp(){
-        mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
         city = cityService.createCity("CIDADE");
         customer1 = customerService.createCustomer("CLIENTE1",city.getId());
         customer2 = customerService.createCustomer("CLIENTE2",city.getId());
@@ -92,21 +76,21 @@ public class CustomerControllerIntegrationTest {
 
     @Test
     public void getNonExistentCustomerTest() throws Exception{
-        mockMvc.perform(get("/customers/"+invalidId))
+        this.mockMvc.perform(get("/customers/"+invalidId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
     public void getAllCustomersTest() throws Exception{
-        mockMvc.perform(get("/customers"))
+        this.mockMvc.perform(get("/customers"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements", Matchers.greaterThanOrEqualTo(2)));
     }
 
     @Test
     public void createCustomerTest() throws Exception{
-        mockMvc.perform(post("/customers").characterEncoding("utf-8")
+        this.mockMvc.perform(post("/customers").characterEncoding("utf-8")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andDo(print())
@@ -117,7 +101,7 @@ public class CustomerControllerIntegrationTest {
 
     @Test
     public void updateCustomerTest() throws Exception{
-        mockMvc.perform(put("/customers/"+customer1.getId()).characterEncoding("utf-8")
+        this.mockMvc.perform(put("/customers/"+customer1.getId()).characterEncoding("utf-8")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andDo(print())
@@ -128,7 +112,7 @@ public class CustomerControllerIntegrationTest {
 
     @Test
     public void updateInvalidCustomerTest() throws Exception{
-        mockMvc.perform(put("/customers/"+invalidId).characterEncoding("utf-8")
+        this.mockMvc.perform(put("/customers/"+invalidId).characterEncoding("utf-8")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andExpect(status().isBadRequest());
@@ -136,19 +120,19 @@ public class CustomerControllerIntegrationTest {
 
     @Test
     public void deleteCustomerTest() throws Exception{
-        mockMvc.perform(delete("/customers/"+customer2.getId()).characterEncoding("utf-8"))
+        this.mockMvc.perform(delete("/customers/"+customer2.getId()).characterEncoding("utf-8"))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void deleteInvalidCustomerTest() throws Exception{
-        mockMvc.perform(delete("/cities/"+invalidId).characterEncoding("utf-8"))
+        this.mockMvc.perform(delete("/cities/"+invalidId).characterEncoding("utf-8"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void searchCustomerTest() throws Exception{
-        mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        this.mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
                 .param("name",customer1.getName()).characterEncoding("utf-8"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements",Matchers.greaterThanOrEqualTo(1)))
@@ -157,7 +141,7 @@ public class CustomerControllerIntegrationTest {
 
     @Test
     public void emptyCustomerSearchTest() throws Exception{
-        mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        this.mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
                 .param("name","jfjnalknfkalnfaoajfkameglçrsmgms,r,msr.,bms"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.page.totalElements",Matchers.is(0)));
@@ -165,7 +149,7 @@ public class CustomerControllerIntegrationTest {
 
     @Test
     public void searchCustomerWithPageableTest() throws Exception{
-        mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        this.mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
                 .param("name",customer1.getName()).param("page","0")
                 .param("size", "20").param("sort","name,asc"))
                 .andExpect(status().isOk())

@@ -5,7 +5,7 @@
 :toclevels: 5
 
 == Introdução
-Bem-vindo à documentação da API do painel de controle Contatos. Essa documentação da API fornecerá informações suficientes sobre os recursos e as operações suportadas na versão atual. Esta API está seguindo as convenções Restful.
+Bem-vindo à documentação da API do cadastro de clientes e cidades. Essa documentação da API fornecerá informações suficientes sobre os recursos e as operações suportadas na versão atual. Esta API está seguindo as convenções Restful.
 
 === Como usar
 As solicitações devem ser feitas usando o protocolo HTTPS. A interface responde a diferentes métodos, dependendo da ação necessária.
@@ -18,6 +18,15 @@ Os métodos permitidos são:
 
 | `GET`
 | Usado para obter informações sobre um recurso
+
+| `POST`
+| Usado para salvar informações sobre um recurso
+
+| `PUT`
+| Usado para alterar informações sobre um recurso
+
+| `DELETE`
+| Usado para apagar informações sobre um recurso
 
 |===
 
@@ -37,9 +46,13 @@ Os códigos HTTP suportados são:
 | `202 Accepted`
 | O novo recurso foi aceito com sucesso
 
+| `204 No Content`
+| A exclusão foi realizada com sucesso
+
 |===
 
 = Recursos - Relatórios
-Os recursos da API V1 são detalhados nesta seção.
+Os recursos da API são detalhados nesta seção.
 
-include::contato.adoc[]
+include::cities.adoc[]
+include::customers.adoc[]

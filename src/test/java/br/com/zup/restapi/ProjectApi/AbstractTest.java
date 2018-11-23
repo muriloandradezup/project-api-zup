@@ -2,8 +2,11 @@ package br.com.zup.restapi.ProjectApi;
 
 import br.com.zup.restapi.ProjectApi.ProjectApiApplication;
 import br.com.zup.restapi.ProjectApi.controllers.CityController;
+import br.com.zup.restapi.ProjectApi.controllers.CustomerController;
 import br.com.zup.restapi.ProjectApi.repository.CityRepository;
+import br.com.zup.restapi.ProjectApi.repository.CustomerRepository;
 import br.com.zup.restapi.ProjectApi.services.CityServiceBean;
+import br.com.zup.restapi.ProjectApi.services.CustomerServiceBean;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -35,25 +38,33 @@ public abstract class AbstractTest {
     @Rule
     public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
 
-    protected RestDocumentationResultHandler documentationResultHandler;
+    private RestDocumentationResultHandler documentationResultHandler;
 
     @Autowired
-    protected WebApplicationContext context;
+    public WebApplicationContext context;
 
     @Autowired
-    CityController cityController;
+    public CityController cityController;
 
     @Autowired
-    CityServiceBean cityService;
+    public CityServiceBean cityService;
 
     @Autowired
-    CityRepository cityRepository;
+    public CityRepository cityRepository;
 
+    @Autowired
+    public CustomerController customerController;
+
+    @Autowired
+    public CustomerServiceBean customerService;
+
+    @Autowired
+    public CustomerRepository customerRepository;
 
     protected MockMvc mockMvc;
 
     @Before
-    public void setUp() {
+    public void init() {
 
         documentationResultHandler = MockMvcRestDocumentation.document("{method-name}",
                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
