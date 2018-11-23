@@ -1,4 +1,4 @@
-= Contatos API
+= API de Clientes
 :example-caption!:
 :source-highlighter: highlightjs
 :toc: left
