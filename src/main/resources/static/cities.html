@@ -431,21 +431,15 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 365
+Content-Length: 244
 
 {
   "_embedded" : {
     "cities" : [ {
-      "id" : 1285,
-      "name" : "Pindamonhangaba"
-    }, {
-      "id" : 1286,
-      "name" : "Araraquara"
-    }, {
-      "id" : 1919,
+      "id" : 22,
       "name" : "CIDADE1"
     }, {
-      "id" : 1920,
+      "id" : 23,
       "name" : "CIDADE2"
     } ]
   },
@@ -453,7 +447,7 @@ Content-Length: 365
     "number" : 0,
     "size" : 20,
     "totalPages" : 1,
-    "totalElements" : 4
+    "totalElements" : 2
   }
 }</code></pre>
 </div>
@@ -463,18 +457,18 @@ Content-Length: 365
 <h3 id="_buscar_uma_cidade_pelo_id">Buscar uma Cidade pelo ID</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">GET /cities/1900 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">GET /cities/3 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Content-Length: 39
 Content-Type: application/json;charset=UTF-8
+Content-Length: 36
 
 {
-  "id" : 1900,
+  "id" : 3,
   "name" : "CIDADE1"
 }</code></pre>
 </div>
@@ -506,11 +500,11 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Content-Length: 43
+Content-Length: 41
 Content-Type: application/json;charset=UTF-8
 
 {
-  "id" : 1908,
+  "id" : 11,
   "name" : "NOVA CIDADE"
 }</code></pre>
 </div>
@@ -518,7 +512,7 @@ Content-Type: application/json;charset=UTF-8
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code>{
-  "id" : 1908,
+  "id" : 11,
   "name" : "NOVA CIDADE"
 }</code></pre>
 </div>
@@ -528,7 +522,7 @@ Content-Type: application/json;charset=UTF-8
 <h3 id="_editar_cidade">Editar Cidade</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">PUT /cities/1904 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">PUT /cities/7 HTTP/1.1
 Content-Length: 42
 Content-Type: application/json;charset=utf-8
 Host: localhost:8080
@@ -550,11 +544,11 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Content-Length: 43
+Content-Length: 40
 Content-Type: application/json;charset=UTF-8
 
 {
-  "id" : 1904,
+  "id" : 7,
   "name" : "NOVA CIDADE"
 }</code></pre>
 </div>
@@ -562,7 +556,7 @@ Content-Type: application/json;charset=UTF-8
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code>{
-  "id" : 1904,
+  "id" : 7,
   "name" : "NOVA CIDADE"
 }</code></pre>
 </div>
@@ -572,7 +566,7 @@ Content-Type: application/json;charset=UTF-8
 <h3 id="_excluir_cidades">Excluir Cidades</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">DELETE /cities/1913 HTTP/1.1
+<pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">DELETE /cities/16 HTTP/1.1
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -593,13 +587,13 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Content-Length: 195
+Content-Length: 193
 Content-Type: application/json;charset=UTF-8
 
 {
   "_embedded" : {
     "cities" : [ {
-      "id" : 1912,
+      "id" : 15,
       "name" : "CIDADE2"
     } ]
   },
@@ -623,13 +617,13 @@ Host: localhost:8080</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Content-Length: 195
+Content-Length: 192
 Content-Type: application/json;charset=UTF-8
 
 {
   "_embedded" : {
     "cities" : [ {
-      "id" : 1899,
+      "id" : 2,
       "name" : "CIDADE2"
     } ]
   },
