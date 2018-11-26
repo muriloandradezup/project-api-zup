@@ -1,4 +1,5 @@
 package br.com.zup.restapi.projectapi.controllers;
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.services.CityServiceBean;
 import org.hamcrest.Matchers;
@@ -71,7 +72,7 @@ public class CityControllerTest {
     @Test
     public void getOneCityTest() throws Exception{
         when(cityService.findCity(id)).thenReturn(city);
-        mockMvc.perform(get("/cities/"+id))
+        mockMvc.perform(get(mainPath+"/"+id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath(namePath, Matchers.is(city.getName())));
     }
@@ -79,12 +80,12 @@ public class CityControllerTest {
     @Test
     public void getNonExistentCityTest() throws Exception{
         when(cityService.findCity(id)).thenReturn(null);
-        mockMvc.perform(get("/cities/"+id))
+        mockMvc.perform(get(mainPath+"/"+id))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void getAllCitiesTest() throws Exception{
+    public void getAllCitiesTest() throws Exception {
         when(cityService.findAllCities(notNull())).thenReturn(new PageImpl<>(citiesList));
         mockMvc.perform(get(mainPath))
                 .andExpect(status().isOk())
@@ -117,7 +118,7 @@ public class CityControllerTest {
         String newName ="Uberlandia2";
         city.setName(newName);
         when(cityService.updateCity(id,newName)).thenReturn(city);
-        mockMvc.perform(put("/cities/"+id).characterEncoding(utf8)
+        mockMvc.perform(put(mainPath+"/"+id).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\""+newName+"\"}"))
                 .andExpect(status().isOk())
@@ -128,7 +129,7 @@ public class CityControllerTest {
     @Test
     public void updateInvalidCityTest() throws Exception{
         when(cityService.updateCity(anyLong(),anyString())).thenThrow(new RuntimeException("Cidade inválida!"));
-        mockMvc.perform(put("/cities/"+id).characterEncoding(utf8)
+        mockMvc.perform(put(mainPath+"/"+id).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(name))
                 .andExpect(status().isBadRequest());

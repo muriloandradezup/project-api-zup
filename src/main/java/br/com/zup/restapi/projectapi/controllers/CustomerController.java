@@ -1,5 +1,6 @@
 package br.com.zup.restapi.projectapi.controllers;
 
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.Customer;
 import br.com.zup.restapi.projectapi.models.PagedContent;
 import br.com.zup.restapi.projectapi.services.CustomerServiceBean;
@@ -29,36 +30,23 @@ public class CustomerController {
 
     @PostMapping("/customers")
     @ResponseStatus(HttpStatus.CREATED)
-    public Customer createCustomer(@RequestBody Customer customer) {
-        try {
-            return customerService.createCustomer(customer.getName(), customer.getCityId());
-        } catch (RuntimeException error) {
-            throw new RuntimeException(error.getMessage());
-        }
+    public Customer createCustomer(@RequestBody Customer customer) throws CustomException {
+        return customerService.createCustomer(customer.getName(), customer.getCityId());
     }
 
     @PutMapping("/customers/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) {
+    public ResponseEntity<Customer> updateCustomer(@PathVariable("id") Long id, @RequestBody Customer customer) throws CustomException {
         Long cityId;
         if (customer.getCity() == null){
             cityId = null;
         } else cityId = customer.getCityId();
-
-        try {
             Customer updatedCustomer = customerService.updateCustomer(id, customer.getName(), cityId);
             return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
-        } catch (RuntimeException error) {
-            throw new RuntimeException(error.getMessage());
-        }
     }
 
     @DeleteMapping("/customers/{id}")
-    public ResponseEntity deleteCustomer(@PathVariable("id") Long id) {
-        try {
-            customerService.deleteCustomer(id);
-        } catch (RuntimeException error) {
-            throw new RuntimeException(error.getMessage());
-        }
+    public ResponseEntity deleteCustomer(@PathVariable("id") Long id) throws CustomException {
+        customerService.deleteCustomer(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

@@ -1,5 +1,6 @@
 package br.com.zup.restapi.projectapi.services;
 
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.repository.CityRepository;
 import org.junit.After;
@@ -19,9 +20,7 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 import static org.mockito.AdditionalAnswers.returnsFirstArg;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CityServiceTest {
@@ -105,7 +104,7 @@ public class CityServiceTest {
     }
 
     @Test
-    public void updateCityTest(){
+    public void updateCityTest() throws CustomException {
         String newName ="Uberlandia2";
         when(cityRepository.findById(id)).thenReturn(Optional.of(city));
         when(cityRepository.saveAndFlush(city)).thenReturn(city);
@@ -115,8 +114,8 @@ public class CityServiceTest {
         assertEquals(newName,updatedCity.getName());
     }
 
-    @Test(expected = RuntimeException.class)
-    public void updateNonExistentCity(){
+    @Test(expected = CustomException.class)
+    public void updateNonExistentCity() throws CustomException {
         when(cityRepository.findById(id)).thenReturn(Optional.empty());
         City updatedCity = cityService.updateCity(id,"Belo Horizonte");
         assertNull(updatedCity);
@@ -124,13 +123,13 @@ public class CityServiceTest {
     }
 
     @Test
-    public void deleteCityTest(){
+    public void deleteCityTest() throws CustomException {
         cityService.deleteCity(id);
         verify(cityRepository,times(1)).deleteById(id);
     }
 
     @Test
-    public void deleteNonExistentCity(){
+    public void deleteNonExistentCity() throws CustomException {
         cityService.deleteCity(id);
         verify(cityRepository, times(0)).saveAndFlush(any(City.class));
     }

@@ -1,5 +1,6 @@
 package br.com.zup.restapi.projectapi.services;
 
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.models.Customer;
 import br.com.zup.restapi.projectapi.repository.CustomerRepository;
@@ -95,7 +96,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void createCustomerTest(){
+    public void createCustomerTest() throws CustomException {
         when(cityService.findCity(cityId)).thenReturn(city);
         when(customerRepository.saveAndFlush(any(Customer.class))).then(returnsFirstArg());
         Customer newCustomer = customerService.createCustomer(name, cityId);
@@ -104,7 +105,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void createBlankCustomerTest(){
+    public void createBlankCustomerTest() throws CustomException {
         when(cityService.findCity(cityId)).thenReturn(city);
         when(customerRepository.saveAndFlush(any(Customer.class))).then(returnsFirstArg());
         Customer newCustomer = customerService.createCustomer("", cityId);
@@ -112,8 +113,8 @@ public class CustomerServiceTest {
         assertEquals("", newCustomer.getName());
     }
 
-    @Test(expected = RuntimeException.class)
-    public void createCustomerWithoutCityTest(){
+    @Test(expected = CustomException.class)
+    public void createCustomerWithoutCityTest() throws CustomException {
         when(cityService.findCity(anyLong())).thenReturn(null);
         Customer newCustomer = customerService.createCustomer(name, cityId);
         assertNull(newCustomer);
@@ -121,7 +122,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void updateCustomerNameTest(){
+    public void updateCustomerNameTest() throws CustomException {
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
         when(customerRepository.saveAndFlush(any(Customer.class))).then(returnsFirstArg());
         when(cityService.findCity(cityId)).thenReturn(city);
@@ -133,7 +134,7 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void updateCustomerCityTest(){
+    public void updateCustomerCityTest() throws CustomException {
         when(customerRepository.findById(id)).thenReturn(Optional.of(customer));
         when(customerRepository.saveAndFlush(any(Customer.class))).then(returnsFirstArg());
         when(cityService.findCity(newCityId)).thenReturn(newCity);
@@ -144,29 +145,29 @@ public class CustomerServiceTest {
         assertEquals(newCityId,updatedCustomer.getCityId());
     }
 
-    @Test(expected = RuntimeException.class)
-    public void updateNonExistentCustomerTest(){
+    @Test(expected = CustomException.class)
+    public void updateNonExistentCustomerTest() throws CustomException {
         when(customerRepository.findById(id)).thenReturn(Optional.empty());
         Customer updatedCustomer = customerService.updateCustomer(id,newName,cityId);
         assertNull(updatedCustomer);
         verify(customerRepository, times(0)).saveAndFlush(any(Customer.class));
     }
 
-    @Test(expected = RuntimeException.class)
-    public void updateCustomerInvalidCityTest(){
+    @Test(expected = CustomException.class)
+    public void updateCustomerInvalidCityTest() throws CustomException {
         Customer updatedCustomer = customerService.updateCustomer(id,newName,cityId);
         assertNull(updatedCustomer);
         verify(customerRepository, times(0)).saveAndFlush(any(Customer.class));
     }
 
     @Test
-    public void deleteCustomerTest(){
+    public void deleteCustomerTest() throws CustomException {
         customerService.deleteCustomer(id);
         verify(customerRepository,times(1)).deleteById(id);
     }
 
-    @Test(expected = RuntimeException.class)
-    public void deleteNonExistentCustomer(){
+    @Test(expected = CustomException.class)
+    public void deleteNonExistentCustomer() throws CustomException {
         doThrow(new RuntimeException("Cliente não pôde ser deletado!")).when(customerRepository).deleteById(anyLong());
         customerService.deleteCustomer(id);
         verify(customerRepository, times(0)).saveAndFlush(any(Customer.class));

@@ -88,7 +88,7 @@ public class CityControllerIntegrationTest extends AbstractTest {
         this.mockMvc.perform(put(mainPath+"/"+invalidId).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(cityJson).toString()))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test

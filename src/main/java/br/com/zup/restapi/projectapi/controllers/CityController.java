@@ -1,5 +1,6 @@
 package br.com.zup.restapi.projectapi.controllers;
 
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.PagedContent;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.services.CityServiceBean;
@@ -34,22 +35,15 @@ public class CityController {
     }
 
     @PutMapping("/cities/{id}")
-    public ResponseEntity<City> updateCity(@PathVariable("id") Long id, @RequestBody City city) {
-        try {
+    public ResponseEntity<City> updateCity(@PathVariable("id") Long id, @RequestBody City city) throws CustomException {
+
             City updatedCity = cityService.updateCity(id, city.getName());
             return new ResponseEntity<>(updatedCity, HttpStatus.OK);
-        } catch (RuntimeException error) {
-            throw new RuntimeException(error.getMessage());
-        }
     }
 
     @DeleteMapping("/cities/{id}")
-    public ResponseEntity deleteCity(@PathVariable("id") Long id) {
-        try {
-            cityService.deleteCity(id);
-        } catch (Exception error) {
-        throw new RuntimeException(error.getMessage());
-        }
+    public ResponseEntity deleteCity(@PathVariable("id") Long id) throws CustomException {
+        cityService.deleteCity(id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

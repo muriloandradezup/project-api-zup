@@ -1,5 +1,6 @@
 package br.com.zup.restapi.projectapi.services;
 
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 
 import org.springframework.data.domain.Page;
@@ -12,9 +13,9 @@ public interface CityService {
 
     City createCity(String name);
 
-    City updateCity(Long id, String newName);
+    City updateCity(Long id, String newName) throws CustomException;
 
-    void deleteCity(Long id);
+    void deleteCity(Long id) throws CustomException;
 
     Page<City> findCityByName(String keyWord, Pageable pageInfo);
 }

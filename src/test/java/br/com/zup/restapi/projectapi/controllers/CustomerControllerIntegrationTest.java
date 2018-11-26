@@ -1,6 +1,7 @@
 package br.com.zup.restapi.projectapi.controllers;
 
 import br.com.zup.restapi.projectapi.AbstractTest;
+import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.models.Customer;
 import org.hamcrest.Matchers;
@@ -45,7 +46,7 @@ public class CustomerControllerIntegrationTest extends AbstractTest {
     private String utf8 = StandardCharsets.UTF_8.name();
 
     @Before
-    public void setUp(){
+    public void setUp() throws Exception {
         city = cityService.createCity("CIDADE");
         customer1 = customerService.createCustomer("CLIENTE1",city.getId());
         customer2 = customerService.createCustomer("CLIENTE2",city.getId());
@@ -112,7 +113,7 @@ public class CustomerControllerIntegrationTest extends AbstractTest {
         this.mockMvc.perform(put(mainPath+"/"+invalidId).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isNotFound());
     }
 
     @Test
