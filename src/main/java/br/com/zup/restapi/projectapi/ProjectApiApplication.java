@@ -1,8 +1,7 @@
-package br.com.zup.restapi.ProjectApi;
+package br.com.zup.restapi.projectapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 public class ProjectApiApplication {

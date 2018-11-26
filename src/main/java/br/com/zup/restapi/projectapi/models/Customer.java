@@ -1,4 +1,4 @@
-package br.com.zup.restapi.ProjectApi.models;
+package br.com.zup.restapi.projectapi.models;
 
 import javax.persistence.*;
 

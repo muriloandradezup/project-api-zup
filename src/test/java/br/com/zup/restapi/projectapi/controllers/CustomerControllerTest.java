@@ -1,8 +1,8 @@
-package br.com.zup.restapi.ProjectApi.controllers;
+package br.com.zup.restapi.projectapi.controllers;
 
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.models.Customer;
-import br.com.zup.restapi.ProjectApi.services.CustomerServiceBean;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.models.Customer;
+import br.com.zup.restapi.projectapi.services.CustomerServiceBean;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.After;
@@ -42,11 +42,10 @@ public class CustomerControllerTest {
     private Customer customer;
     private City city = new City("Uberlândia");
     private City newCity = new City("Uberlândia");
-    private List<Customer> customersList = new ArrayList();
+    private List<Customer> customersList = new ArrayList<>();
     private Customer customer1 = new Customer("Fulano",city);
     private Customer customer2 = new Customer("Ciclano",city);
     private Pageable pageInfo = PageRequest.of(0,10, Sort.Direction.ASC,"name");
-    private String keyWord = "PESQUISA";
     private Map<String,String> cityJson = new HashMap<>();
     private Map<String,String> customerJson = new HashMap<>();
 

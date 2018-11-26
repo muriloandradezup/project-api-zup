@@ -1,8 +1,7 @@
-package br.com.zup.restapi.ProjectApi.services;
+package br.com.zup.restapi.projectapi.services;
 
-import br.com.zup.restapi.ProjectApi.models.PagedContent;
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.repository.CityRepository;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.repository.CityRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,12 +27,11 @@ import static org.mockito.Mockito.when;
 public class CityServiceTest {
 
     private Long id;
-    private String name;
     private City city;
-    private List<City> citiesList = new ArrayList();
+    private List<City> citiesList = new ArrayList<>();
     private City city1= new City("Patos de Minas");
     private City city2= new City("Lagoa Formosa");
-    private Pageable pageInfo = new PageRequest(0,10, Sort.Direction.ASC,"name");
+    private Pageable pageInfo = PageRequest.of(0,10, Sort.Direction.ASC,"name");
     private String keyWord = "PESQUISA";
 
 
@@ -92,6 +90,7 @@ public class CityServiceTest {
     @Test
     public void createCityTest(){
         when(cityRepository.saveAndFlush(any(City.class))).then(returnsFirstArg());
+        String name = "UBATUBA";
         City newCity = cityService.createCity(name);
         assertNotNull(newCity);
         assertEquals(name,newCity.getName());

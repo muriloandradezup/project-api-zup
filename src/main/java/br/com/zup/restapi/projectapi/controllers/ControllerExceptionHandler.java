@@ -1,4 +1,4 @@
-package br.com.zup.restapi.ProjectApi.controllers;
+package br.com.zup.restapi.projectapi.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

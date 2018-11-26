@@ -1,6 +1,6 @@
-package br.com.zup.restapi.ProjectApi.controllers;
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.services.CityServiceBean;
+package br.com.zup.restapi.projectapi.controllers;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.services.CityServiceBean;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -41,10 +41,10 @@ public class CityControllerTest {
     private City city;
     private Long id;
     private String name = "Uberlândia";
-    private List<City> citiesList = new ArrayList();
+    private List<City> citiesList = new ArrayList<>();
     private City city1= new City("Patos de Minas");
     private City city2= new City("Lagoa Formosa");
-    private Pageable pageInfo = new PageRequest(0,10, Sort.Direction.ASC,"name");
+    private Pageable pageInfo = PageRequest.of(0,10, Sort.Direction.ASC,"name");
 
     @Before
     public void setUp(){
@@ -76,7 +76,7 @@ public class CityControllerTest {
 
     @Test
     public void getAllCitiesTest() throws Exception{
-        when(cityService.findAllCities(notNull())).thenReturn(new PageImpl<City>(citiesList));
+        when(cityService.findAllCities(notNull())).thenReturn(new PageImpl<>(citiesList));
         mockMvc.perform(get("/cities"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.cities", Matchers.hasSize(2)))

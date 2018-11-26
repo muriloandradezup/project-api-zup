@@ -1,8 +1,8 @@
-package br.com.zup.restapi.ProjectApi.services;
+package br.com.zup.restapi.projectapi.services;
 
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.models.Customer;
-import br.com.zup.restapi.ProjectApi.repository.CustomerRepository;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.models.Customer;
+import br.com.zup.restapi.projectapi.repository.CustomerRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,10 +33,10 @@ public class CustomerServiceTest {
     private Long cityId = city.getId();
     private City newCity = new City("Uberlândia");
     private Long newCityId = newCity.getId();
-    private List<Customer> customersList = new ArrayList();
+    private List<Customer> customersList = new ArrayList<>();
     private Customer customer1 = new Customer("Fulano",city);
     private Customer customer2 = new Customer("Ciclano",city);
-    private Pageable pageInfo = new PageRequest(0,10, Sort.Direction.ASC,"name");
+    private Pageable pageInfo = PageRequest.of(0,10, Sort.Direction.ASC,"name");
     private String keyWord = "PESQUISA";
 
     @Mock

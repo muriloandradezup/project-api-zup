@@ -1,8 +1,7 @@
-package br.com.zup.restapi.ProjectApi.services;
+package br.com.zup.restapi.projectapi.services;
 
-import br.com.zup.restapi.ProjectApi.models.PagedContent;
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.repository.CityRepository;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

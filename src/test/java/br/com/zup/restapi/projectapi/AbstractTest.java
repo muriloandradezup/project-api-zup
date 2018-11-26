@@ -1,19 +1,16 @@
-package br.com.zup.restapi.ProjectApi;
+package br.com.zup.restapi.projectapi;
 
-import br.com.zup.restapi.ProjectApi.ProjectApiApplication;
-import br.com.zup.restapi.ProjectApi.controllers.CityController;
-import br.com.zup.restapi.ProjectApi.controllers.CustomerController;
-import br.com.zup.restapi.ProjectApi.repository.CityRepository;
-import br.com.zup.restapi.ProjectApi.repository.CustomerRepository;
-import br.com.zup.restapi.ProjectApi.services.CityServiceBean;
-import br.com.zup.restapi.ProjectApi.services.CustomerServiceBean;
+import br.com.zup.restapi.projectapi.controllers.CityController;
+import br.com.zup.restapi.projectapi.controllers.CustomerController;
+import br.com.zup.restapi.projectapi.repository.CityRepository;
+import br.com.zup.restapi.projectapi.repository.CustomerRepository;
+import br.com.zup.restapi.projectapi.services.CityServiceBean;
+import br.com.zup.restapi.projectapi.services.CustomerServiceBean;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
@@ -25,8 +22,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-
-import javax.servlet.FilterConfig;
 
 @WebAppConfiguration
 @SpringBootTest

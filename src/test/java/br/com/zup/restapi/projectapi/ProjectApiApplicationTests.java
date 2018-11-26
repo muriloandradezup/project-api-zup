@@ -1,4 +1,4 @@
-package br.com.zup.restapi.ProjectApi;
+package br.com.zup.restapi.projectapi;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

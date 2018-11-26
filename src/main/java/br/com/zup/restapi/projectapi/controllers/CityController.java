@@ -1,10 +1,9 @@
-package br.com.zup.restapi.ProjectApi.controllers;
+package br.com.zup.restapi.projectapi.controllers;
 
-import br.com.zup.restapi.ProjectApi.models.PagedContent;
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.services.CityServiceBean;
+import br.com.zup.restapi.projectapi.models.PagedContent;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.services.CityServiceBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

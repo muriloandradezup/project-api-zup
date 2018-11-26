@@ -1,24 +1,17 @@
-package br.com.zup.restapi.ProjectApi.controllers;
+package br.com.zup.restapi.projectapi.controllers;
 
-import br.com.zup.restapi.ProjectApi.AbstractTest;
-import br.com.zup.restapi.ProjectApi.models.City;
-import br.com.zup.restapi.ProjectApi.models.Customer;
-import br.com.zup.restapi.ProjectApi.repository.CustomerRepository;
-import br.com.zup.restapi.ProjectApi.services.CityServiceBean;
-import br.com.zup.restapi.ProjectApi.services.CustomerServiceBean;
+import br.com.zup.restapi.projectapi.AbstractTest;
+import br.com.zup.restapi.projectapi.models.City;
+import br.com.zup.restapi.projectapi.models.Customer;
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import javax.transaction.Transactional;
 

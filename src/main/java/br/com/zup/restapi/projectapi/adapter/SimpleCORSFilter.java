@@ -1,4 +1,4 @@
-package br.com.zup.restapi.ProjectApi.adapter;
+package br.com.zup.restapi.projectapi.adapter;
 
 import org.springframework.stereotype.Component;
 

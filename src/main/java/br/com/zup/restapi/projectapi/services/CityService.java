@@ -1,7 +1,6 @@
-package br.com.zup.restapi.ProjectApi.services;
+package br.com.zup.restapi.projectapi.services;
 
-import br.com.zup.restapi.ProjectApi.models.PagedContent;
-import br.com.zup.restapi.ProjectApi.models.City;
+import br.com.zup.restapi.projectapi.models.City;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
