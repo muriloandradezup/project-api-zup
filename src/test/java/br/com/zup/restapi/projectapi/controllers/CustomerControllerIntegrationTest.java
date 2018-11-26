@@ -1,7 +1,6 @@
 package br.com.zup.restapi.projectapi.controllers;
 
 import br.com.zup.restapi.projectapi.AbstractTest;
-import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.models.Customer;
 import org.hamcrest.Matchers;

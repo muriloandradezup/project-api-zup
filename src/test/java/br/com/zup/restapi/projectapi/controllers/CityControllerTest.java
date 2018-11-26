@@ -1,5 +1,4 @@
 package br.com.zup.restapi.projectapi.controllers;
-import br.com.zup.restapi.projectapi.exceptions.CustomException;
 import br.com.zup.restapi.projectapi.models.City;
 import br.com.zup.restapi.projectapi.services.CityServiceBean;
 import org.hamcrest.Matchers;

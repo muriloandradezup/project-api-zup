@@ -33,8 +33,6 @@ public abstract class AbstractTest {
     @Rule
     public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
 
-    private RestDocumentationResultHandler documentationResultHandler;
-
     @Autowired
     public WebApplicationContext context;
 
@@ -61,12 +59,12 @@ public abstract class AbstractTest {
     @Before
     public void init() {
 
-        documentationResultHandler = MockMvcRestDocumentation.document("{method-name}",
+        RestDocumentationResultHandler documentationResultHandler = MockMvcRestDocumentation.document("{method-name}",
                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
                 Preprocessors.preprocessResponse(Preprocessors.prettyPrint()));
         mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .apply(MockMvcRestDocumentation.documentationConfiguration(this.restDocumentation))
-                .alwaysDo(this.documentationResultHandler)
+                .alwaysDo(documentationResultHandler)
                 .build();
     }
 }
