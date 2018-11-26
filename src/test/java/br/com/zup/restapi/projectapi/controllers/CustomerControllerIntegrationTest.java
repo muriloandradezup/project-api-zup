@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +38,11 @@ public class CustomerControllerIntegrationTest extends AbstractTest {
     private Map<String,String> cityJson = new HashMap<>();
     private Map<String,Object> customerJson = new HashMap<>();
     private Customer newCustomer;
-
-
+    private String mainPath = "/customers";
+    private String searchPath = "/customers/search/findByNameIgnoreCaseContaining";
+    private String namePath = "$.name";
+    private String totalElementsPath = "$.page.totalElements";
+    private String utf8 = StandardCharsets.UTF_8.name();
 
     @Before
     public void setUp(){
@@ -62,50 +66,50 @@ public class CustomerControllerIntegrationTest extends AbstractTest {
 
     @Test
     public void getOneCustomerTest() throws Exception{
-        mockMvc.perform(get("/customers/"+customer1.getId()))
+        mockMvc.perform(get(mainPath+"/"+customer1.getId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", Matchers.is(customer1.getName())));
+                .andExpect(jsonPath(namePath, Matchers.is(customer1.getName())));
     }
 
     @Test
     public void getNonExistentCustomerTest() throws Exception{
-        this.mockMvc.perform(get("/customers/"+invalidId))
+        this.mockMvc.perform(get(mainPath+"/"+invalidId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").doesNotExist());
     }
 
     @Test
     public void getAllCustomersTest() throws Exception{
-        this.mockMvc.perform(get("/customers"))
+        this.mockMvc.perform(get(mainPath))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements", Matchers.greaterThanOrEqualTo(2)));
+                .andExpect(jsonPath(totalElementsPath, Matchers.greaterThanOrEqualTo(2)));
     }
 
     @Test
     public void createCustomerTest() throws Exception{
-        this.mockMvc.perform(post("/customers").characterEncoding("utf-8")
+        this.mockMvc.perform(post(mainPath).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andDo(print())
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.name", Matchers.is(newCustomer.getName())));
+                .andExpect(jsonPath(namePath, Matchers.is(newCustomer.getName())));
     }
 
 
     @Test
     public void updateCustomerTest() throws Exception{
-        this.mockMvc.perform(put("/customers/"+customer1.getId()).characterEncoding("utf-8")
+        this.mockMvc.perform(put(mainPath+"/"+customer1.getId()).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", Matchers.is(newCustomer.getName())))
+                .andExpect(jsonPath(namePath, Matchers.is(newCustomer.getName())))
                 .andExpect(jsonPath("$.cityId",Matchers.is((int) city.getId().longValue())));
     }
 
     @Test
     public void updateInvalidCustomerTest() throws Exception{
-        this.mockMvc.perform(put("/customers/"+invalidId).characterEncoding("utf-8")
+        this.mockMvc.perform(put(mainPath+"/"+invalidId).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andExpect(status().isBadRequest());
@@ -113,39 +117,39 @@ public class CustomerControllerIntegrationTest extends AbstractTest {
 
     @Test
     public void deleteCustomerTest() throws Exception{
-        this.mockMvc.perform(delete("/customers/"+customer2.getId()).characterEncoding("utf-8"))
+        this.mockMvc.perform(delete(mainPath+"/"+customer2.getId()).characterEncoding(utf8))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void deleteInvalidCustomerTest() throws Exception{
-        this.mockMvc.perform(delete("/cities/"+invalidId).characterEncoding("utf-8"))
+        this.mockMvc.perform(delete("/cities/"+invalidId).characterEncoding(utf8))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void searchCustomerTest() throws Exception{
-        this.mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
-                .param("name",customer1.getName()).characterEncoding("utf-8"))
+        this.mockMvc.perform(get(searchPath)
+                .param("name",customer1.getName()).characterEncoding(utf8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements",Matchers.greaterThanOrEqualTo(1)))
+                .andExpect(jsonPath(totalElementsPath,Matchers.greaterThanOrEqualTo(1)))
                 .andExpect(jsonPath("$._embedded.customers[0].name", Matchers.is(customer1.getName())));
     }
 
     @Test
     public void emptyCustomerSearchTest() throws Exception{
-        this.mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        this.mockMvc.perform(get(searchPath)
                 .param("name","jfjnalknfkalnfaoajfkameglçrsmgms,r,msr.,bms"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements",Matchers.is(0)));
+                .andExpect(jsonPath(totalElementsPath,Matchers.is(0)));
     }
 
     @Test
     public void searchCustomerWithPageableTest() throws Exception{
-        this.mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        this.mockMvc.perform(get(searchPath)
                 .param("name",customer1.getName()).param("page","0")
                 .param("size", "20").param("sort","name,asc"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements",Matchers.greaterThanOrEqualTo(1)));
+                .andExpect(jsonPath(totalElementsPath,Matchers.greaterThanOrEqualTo(1)));
     }
 }

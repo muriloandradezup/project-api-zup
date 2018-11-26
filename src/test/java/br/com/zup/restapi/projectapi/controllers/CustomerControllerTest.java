@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +49,13 @@ public class CustomerControllerTest {
     private Pageable pageInfo = PageRequest.of(0,10, Sort.Direction.ASC,"name");
     private Map<String,String> cityJson = new HashMap<>();
     private Map<String,String> customerJson = new HashMap<>();
+    private String mainPath = "/customers";
+    private String searchPath = "/customers/search/findByNameIgnoreCaseContaining";
+    private String namePath = "$.name";
+    private String totalElementsPath = "$.page.totalElements";
+    private String utf8 = StandardCharsets.UTF_8.name();
+    private String name0 = "$._embedded.customers[0].name";
+    private String name1 = "$._embedded.customers[1].name";
 
 
     @Before
@@ -74,32 +82,32 @@ public class CustomerControllerTest {
     @Test
     public void getOneCustomerTest() throws Exception{
         when(customerService.findCustomer(anyLong())).thenReturn(customer);
-        mockMvc.perform(get("/customers/"+id))
+        mockMvc.perform(get(mainPath+"/"+id))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", Matchers.is(customer.getName())));
+                .andExpect(jsonPath(namePath, Matchers.is(customer.getName())));
     }
 
     @Test
     public void getNonExistentCustomerTest() throws Exception{
         when(customerService.findCustomer(id)).thenReturn(null);
-        mockMvc.perform(get("/customers/"+id))
+        mockMvc.perform(get(mainPath+"/"+id))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getAllCustomersTest() throws Exception{
         when(customerService.findAllCustomers(notNull())).thenReturn(new PageImpl<>(customersList));
-        mockMvc.perform(get("/customers"))
+        mockMvc.perform(get(mainPath))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements", Matchers.greaterThanOrEqualTo(2)))
-                .andExpect(jsonPath("$._embedded.customers[0].name", Matchers.is(customer1.getName())))
-                .andExpect(jsonPath("$._embedded.customers[1].name", Matchers.is(customer2.getName())));
+                .andExpect(jsonPath(totalElementsPath, Matchers.greaterThanOrEqualTo(2)))
+                .andExpect(jsonPath(name0, Matchers.is(customer1.getName())))
+                .andExpect(jsonPath(name1, Matchers.is(customer2.getName())));
     }
 
     @Test
     public void getEmptyCustomerList() throws Exception{
         when(customerService.findAllCustomers(notNull())).thenReturn(Page.empty(pageInfo));
-        mockMvc.perform(get("/customers"))
+        mockMvc.perform(get(mainPath))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.customers", Matchers.hasSize(0)));
     }
@@ -107,12 +115,12 @@ public class CustomerControllerTest {
     @Test
     public void createCustomerTest() throws Exception{
         when(customerService.createCustomer(anyString(),anyLong())).thenReturn(customer);
-        mockMvc.perform(post("/customers").characterEncoding("utf-8")
+        mockMvc.perform(post(mainPath).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", Matchers.is(customer.getId().intValue())))
-                .andExpect(jsonPath("$.name", Matchers.is(customer.getName())));
+                .andExpect(jsonPath(namePath, Matchers.is(customer.getName())));
     }
 
 
@@ -122,12 +130,12 @@ public class CustomerControllerTest {
         customer.setName(newName);
         customer.setCity(newCity);
         when(customerService.updateCustomer(anyLong(),anyString(),anyLong())).thenReturn(customer);
-        mockMvc.perform(put("/customers/"+id).characterEncoding("utf-8")
+        mockMvc.perform(put(mainPath+"/"+id).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", Matchers.is(id.intValue())))
-                .andExpect(jsonPath("$.name", Matchers.is(newName)))
+                .andExpect(jsonPath(namePath, Matchers.is(newName)))
                 .andExpect(jsonPath("$.cityId",Matchers.is((int) newCity.getId().longValue())));
     }
 
@@ -135,7 +143,7 @@ public class CustomerControllerTest {
     public void updateInvalidCustomerTest() throws Exception{
         when(customerService.updateCustomer(anyLong(),anyString(),anyLong()))
                 .thenThrow(new RuntimeException("Update inválido!"));
-        mockMvc.perform(put("/customers/"+id).characterEncoding("utf-8")
+        mockMvc.perform(put(mainPath+"/"+id).characterEncoding(utf8)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new JSONObject(customerJson).toString()))
                 .andExpect(status().isBadRequest())
@@ -144,31 +152,31 @@ public class CustomerControllerTest {
 
     @Test
     public void deleteCustomerTest() throws Exception{
-        mockMvc.perform(delete("/customers/"+id).characterEncoding("utf-8"))
+        mockMvc.perform(delete(mainPath+"/"+id).characterEncoding(utf8))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     public void deleteInvalidCustomerTest() throws Exception{
-        mockMvc.perform(delete("/cities/"+id).characterEncoding("utf-8"))
+        mockMvc.perform(delete("/cities/"+id).characterEncoding(utf8))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     public void searchCustomerTest() throws Exception{
         when(customerService.findCustomerByName(notNull(),notNull())).thenReturn(new PageImpl<>(customersList));
-        mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
-                .param("name","aaaaaa").characterEncoding("utf-8"))
+        mockMvc.perform(get(searchPath)
+                .param("name","aaaaaa").characterEncoding(utf8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements",Matchers.greaterThanOrEqualTo(2)))
-                .andExpect(jsonPath("$._embedded.customers[0].name", Matchers.is(customer1.getName())))
-                .andExpect(jsonPath("$._embedded.customers[1].name", Matchers.is(customer2.getName())));
+                .andExpect(jsonPath(totalElementsPath,Matchers.greaterThanOrEqualTo(2)))
+                .andExpect(jsonPath(name0, Matchers.is(customer1.getName())))
+                .andExpect(jsonPath(name1, Matchers.is(customer2.getName())));
     }
 
     @Test
     public void emptyCustomerSearchTest() throws Exception{
         when(customerService.findCustomerByName(notNull(),notNull())).thenReturn(Page.empty(pageInfo));
-        mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        mockMvc.perform(get(searchPath)
                 .param("name","bbbbb"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$._embedded.customers",Matchers.hasSize(0)));
@@ -177,12 +185,12 @@ public class CustomerControllerTest {
     @Test
     public void searchCustomerWithPageableTest() throws Exception{
         when(customerService.findCustomerByName(notNull(),notNull())).thenReturn(new PageImpl<>(customersList));
-        mockMvc.perform(get("/customers/search/findByNameIgnoreCaseContaining")
+        mockMvc.perform(get(searchPath)
                 .param("name","cccccc").param("page","0")
                 .param("size", "20").param("sort","name,asc"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.page.totalElements",Matchers.greaterThanOrEqualTo(2)))
-                .andExpect(jsonPath("$._embedded.customers[0].name", Matchers.is(customer1.getName())))
-                .andExpect(jsonPath("$._embedded.customers[1].name", Matchers.is(customer2.getName())));
+                .andExpect(jsonPath(totalElementsPath,Matchers.greaterThanOrEqualTo(2)))
+                .andExpect(jsonPath(name0, Matchers.is(customer1.getName())))
+                .andExpect(jsonPath(name1, Matchers.is(customer2.getName())));
     }
 }
